@@ -71,4 +71,15 @@ public class person {
     public void setAge(Integer age) {
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", year=" + year +
+                ", age=" + age +
+                '}';
+    }
 }
