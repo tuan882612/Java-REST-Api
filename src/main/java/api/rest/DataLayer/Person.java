@@ -1,16 +1,16 @@
 package api.rest.DataLayer;
 
-public class person {
+public class Person {
     private Long id;
     private String name;
     private String type;
     private Integer year;
     private Integer age;
 
-    public person() {
+    public Person() {
     }
 
-    public person(Long id,
+    public Person(Long id,
                   String name,
                   String type,
                   Integer year,
@@ -22,7 +22,7 @@ public class person {
         this.age = age;
     }
 
-    public person(String name,
+    public Person(String name,
                   String type,
                   Integer year,
                   Integer age) {
