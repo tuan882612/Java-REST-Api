@@ -1,6 +1,22 @@
-package api.rest.DataLayer;
+package api.rest.Data;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Person {
+
+    @Id
+    @SequenceGenerator(
+            name = "p_sequence",
+            sequenceName = "p_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "p_sequence"
+    )
     private Long id;
     private String name;
     private String type;

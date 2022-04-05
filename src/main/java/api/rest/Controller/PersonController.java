@@ -1,6 +1,6 @@
 package api.rest.Controller;
 
-import api.rest.DataLayer.Person;
+import api.rest.Data.Person;
 import api.rest.Service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
