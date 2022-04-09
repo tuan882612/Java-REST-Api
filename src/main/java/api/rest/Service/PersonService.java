@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -16,7 +17,15 @@ public class PersonService {
         this.pRepository = pRepository;
     }
 
-    public List<Person> getStudent() {
+    public List<Person> getPersons(){
         return pRepository.findAll();
+    }
+
+    public void addPerson(Person person){
+        Optional<Person> personByType = pRepository.findPersonByType(person.getType());
+        if(personByType.isPresent()){
+            throw new IllegalThreadStateException("Person already" + person.getType() + "exist in database");
+        }
+        pRepository.save(person);
     }
 }

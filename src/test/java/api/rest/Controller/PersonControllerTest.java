@@ -1,5 +1,6 @@
 package api.rest.Controller;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +21,7 @@ public class PersonControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @DisplayName("Should return and output all entities")
     public void Should_return_content() throws Exception {
         this.mockMvc.perform(get("/api/v1/person"))
                 .andDo(print())

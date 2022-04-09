@@ -5,7 +5,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Month;
 import java.util.List;
+import java.time.LocalDate;
+
+import static java.time.Month.JANUARY;
+import static java.time.Month.OCTOBER;
 
 //These are just sample data cases
 @Configuration
@@ -15,19 +20,15 @@ public class PersonConfig {
     CommandLineRunner commandLineRunner(PRepository repository){
         return args -> {
             Person tuan = new Person(
-                    1L,
                     "Tuan",
-                    "CSE",
-                    2024,
-                    19
+                    "1001",
+                    "2025"
             );
 
             Person jack = new Person(
-                    2L,
                     "jack",
-                    "CSE",
-                    2022,
-                    21
+                    "1002",
+                    "2024"
             );
 
             repository.saveAll(List.of(tuan, jack));

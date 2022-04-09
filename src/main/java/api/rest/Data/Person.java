@@ -20,33 +20,27 @@ public class Person {
     private Long id;
     private String name;
     private String type;
-    private Integer year;
-    private Integer age;
-
-    public Person() {
-    }
+    private String year;
 
     public Person(Long id,
                   String name,
                   String type,
-                  Integer year,
-                  Integer age) {
+                  String year) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.year = year;
-        this.age = age;
     }
 
     public Person(String name,
                   String type,
-                  Integer year,
-                  Integer age) {
+                  String year) {
         this.name = name;
         this.type = type;
         this.year = year;
-        this.age = age;
     }
+
+    public Person() {}
 
     public Long getId() {
         return id;
@@ -72,20 +66,12 @@ public class Person {
         this.type = type;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     @Override
@@ -94,8 +80,6 @@ public class Person {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", year=" + year +
-                ", age=" + age +
-                '}';
+                ", year=" + year;
     }
 }

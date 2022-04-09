@@ -3,9 +3,8 @@ package api.rest.Controller;
 import api.rest.Data.Person;
 import api.rest.Service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +20,13 @@ public class PersonController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public List<Person> getStudent() {
-        return service.getStudent();
+        return service.getPersons();
+    }
+
+    @PostMapping
+    public void postPerson(@RequestBody Person person) {
+        service.addPerson(person);
     }
 }
