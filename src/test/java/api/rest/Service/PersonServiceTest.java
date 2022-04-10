@@ -18,7 +18,7 @@ class PersonServiceTest {
 
     @Test
     @DisplayName("Repository was called to get all entities")
-    public void return_persons() throws Exception {
+    public void return_persons() {
         List<Person> data = pRepository.findAll();
         Assertions.assertTrue(data.size()>0);
     }

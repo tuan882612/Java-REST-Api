@@ -20,7 +20,7 @@ public class PersonControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    String baseUrl = "/api/v1/person";
+    String baseUrl = "/api/v1/person/";
 
     @Test
     @DisplayName("Creates default entities and returns all entities")
@@ -34,10 +34,25 @@ public class PersonControllerTest {
     @Test
     @DisplayName("Return specific entity")
     public void getPerson() throws Exception {
-        this.mockMvc.perform(get(baseUrl+"/1001"))
+        this.mockMvc.perform(get(baseUrl+"1001"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    @DisplayName("Return NOT FOUND if the id does not exist")
+    public void doesNotExist() throws Exception {
+        this.mockMvc.perform(get(baseUrl+"0000"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Return BAD REQUEST if the id does not match format")
+    public void invalidRequest() throws Exception {
+        this.mockMvc.perform(get(baseUrl+"w"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 }

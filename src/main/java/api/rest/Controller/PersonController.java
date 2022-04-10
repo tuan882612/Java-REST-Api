@@ -24,11 +24,11 @@ public class PersonController {
 
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<Object> handleNotFound(){
-        return new ResponseEntity<>("Person with such does not exist in database", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Person with such type does not exist in database", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<Object> handleFound(){
+    public ResponseEntity<Object> handleBadRequest(){
         return new ResponseEntity<>("Invalid person type", HttpStatus.BAD_REQUEST);
     }
 
@@ -39,7 +39,7 @@ public class PersonController {
     }
 
     @GetMapping("/{type}")
-    public Optional<Person> getStudent(@PathVariable String type){
+    public Optional<Person> getPerson(@PathVariable String type){
         return service.getPerson(type);
     }
 

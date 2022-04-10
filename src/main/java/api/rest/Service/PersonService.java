@@ -28,6 +28,11 @@ public class PersonService {
         if (personByType.isEmpty()){
             throw new NoSuchElementException();
         }
+        for (int i = 0; i < type.length(); i++) {
+            if (Character.isLetter(type.charAt(i))) {
+                throw new IllegalArgumentException();
+            }
+        }
         return pRepository.findPersonByType(type);
     }
 
