@@ -1,6 +1,6 @@
 # Java-Test-Api
 Basic RESTful API
 - CRUD request
-- Query operations
+- Query operations on postgreSQL database
 - jUnit Testing and mockMvc
 - expection handling
