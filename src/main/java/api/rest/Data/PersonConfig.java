@@ -31,7 +31,12 @@ public class PersonConfig {
                     "2024"
             );
 
-            repository.saveAll(List.of(tuan, jack));
+            Person sam = new Person(
+                    "sam",
+                    "1003",
+                    "2028"
+            );
+            repository.saveAll(List.of(tuan, jack, sam));
         };
     }
 }

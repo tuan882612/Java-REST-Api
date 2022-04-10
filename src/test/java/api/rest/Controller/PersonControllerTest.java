@@ -20,12 +20,24 @@ public class PersonControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    String baseUrl = "/api/v1/person";
+
     @Test
-    @DisplayName("Should return and output all entities")
-    public void Should_return_content() throws Exception {
-        this.mockMvc.perform(get("/api/v1/person"))
+    @DisplayName("Creates default entities and returns all entities")
+    public void getPersons() throws Exception {
+        this.mockMvc.perform(get(baseUrl))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @DisplayName("Return specific entity")
+    public void getPerson() throws Exception {
+        this.mockMvc.perform(get(baseUrl+"/1001"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
 }

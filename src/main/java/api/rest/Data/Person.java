@@ -40,7 +40,7 @@ public class Person {
         this.year = year;
     }
 
-    public Person() {}
+    public Person(){}
 
     public Long getId() {
         return id;
