@@ -25,13 +25,13 @@ public class PersonService {
 
     public Optional<Person> getPerson(String type){
         Optional<Person> personByType = pRepository.findPersonByType(type);
-        if (personByType.isEmpty()){
-            throw new NoSuchElementException();
-        }
         for (int i = 0; i < type.length(); i++) {
             if (Character.isLetter(type.charAt(i))) {
                 throw new IllegalArgumentException();
             }
+        }
+        if (personByType.isEmpty()){
+            throw new NoSuchElementException();
         }
         return pRepository.findPersonByType(type);
     }
