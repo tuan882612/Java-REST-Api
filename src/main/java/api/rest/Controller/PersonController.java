@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -30,6 +31,11 @@ public class PersonController {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ResponseEntity<Object> handleBadRequest(){
         return new ResponseEntity<>("Invalid person type", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = InstanceAlreadyExistsException.class)
+    public ResponseEntity<Object> handleIsFound(){
+        return new ResponseEntity<>("Person already exist in the DataBase", HttpStatus.FOUND);
     }
 
     @GetMapping

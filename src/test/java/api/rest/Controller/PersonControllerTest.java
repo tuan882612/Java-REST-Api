@@ -50,9 +50,27 @@ public class PersonControllerTest {
 
     @Test
     @DisplayName("Return BAD REQUEST if the id does not match format")
-    public void invalidRequest() throws Exception {
+    public void invalidGetInput() throws Exception {
         this.mockMvc.perform(get(baseUrl+"w"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Add new person to the Database")
+    public void addPerson(){
+
+    }
+
+    @Test
+    @DisplayName("Return FOUND")
+    public void alreadyExist() {
+
+    }
+
+    @Test
+    @DisplayName("Return BAD REQUEST")
+    public void invalidPostInput() {
+
     }
 }
