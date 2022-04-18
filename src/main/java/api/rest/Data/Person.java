@@ -17,6 +17,7 @@ public class Person {
             strategy = GenerationType.SEQUENCE,
             generator = "p_sequence"
     )
+
     private Long id;
     private String name;
     private String type;

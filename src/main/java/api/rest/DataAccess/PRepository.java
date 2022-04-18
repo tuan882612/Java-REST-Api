@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface PRepository
         extends JpaRepository<Person, Long> {
 
-//    @Query("SELECT s FROM Person s WHERE s.type = ?1")
     Optional<Person> findPersonByType(String type);
+    Optional<Person> findPersonByName(String name);
+    Optional<Person> findPersonByYear(String year);
 }

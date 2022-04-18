@@ -1,13 +1,22 @@
 package api.rest.Controller;
 
+import api.rest.Data.Person;
+import api.rest.Service.PersonService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -18,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     String baseUrl = "/api/v1/person/";
 
@@ -58,19 +67,46 @@ public class PersonControllerTest {
 
     @Test
     @DisplayName("Add new person to the Database")
-    public void addPerson(){
+    public void addPerson() throws Exception {
+        RequestBuilder tryPost = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"test\",\"type\":1111,\"year\":1111}")
+                .contentType(MediaType.APPLICATION_JSON);
 
+        this.mockMvc.perform(tryPost)
+                .andDo(print())
+                .andExpect(status().isCreated());
+
+        this.mockMvc.perform(get(baseUrl+"1111"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Return FOUND")
-    public void alreadyExist() {
+    @DisplayName("Return FOUND if type or name is already in the DataBase")
+    public void alreadyExist() throws Exception{
+        RequestBuilder tryPost = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Tuan\",\"type\":1111,\"year\":1111}")
+                .contentType(MediaType.APPLICATION_JSON);
 
+        RequestBuilder tryPost1 = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"test\",\"type\":1001,\"year\":1111}")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(tryPost)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+        this.mockMvc.perform(tryPost1)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
-    @Test
-    @DisplayName("Return BAD REQUEST")
-    public void invalidPostInput() {
+//    Unit test for if input is less than 3 or empty
 
-    }
 }

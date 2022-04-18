@@ -30,27 +30,34 @@ public class PersonController {
 
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ResponseEntity<Object> handleBadRequest(){
-        return new ResponseEntity<>("Invalid person type", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Invalid person type inputted", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = InstanceAlreadyExistsException.class)
     public ResponseEntity<Object> handleIsFound(){
-        return new ResponseEntity<>("Person already exist in the DataBase", HttpStatus.FOUND);
+        return new ResponseEntity<>("Person already exist in the DataBase", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public List<Person> getPersons() {
         return service.getPersons();
     }
 
-    @GetMapping("/{type}")
+    @GetMapping(path = "/{type}")
     public Optional<Person> getPerson(@PathVariable String type){
         return service.getPerson(type);
     }
 
     @PostMapping
-    public void postPerson(@RequestBody Person person) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void postPerson(@RequestBody Person person) throws InstanceAlreadyExistsException {
         service.addPerson(person);
+    }
+
+    @PutMapping(path = "/{type}")
+    public void putPerson(@PathVariable("type") String type,
+                           @RequestParam(required = false) String name,
+                          @RequestParam(required = false) String year) throws InstanceAlreadyExistsException {
+        service.updatePerson(type, name, year);
     }
 }
