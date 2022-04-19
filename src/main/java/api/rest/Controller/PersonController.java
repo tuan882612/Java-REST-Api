@@ -2,12 +2,14 @@ package api.rest.Controller;
 
 import api.rest.Data.Person;
 import api.rest.Service.PersonService;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -38,6 +40,11 @@ public class PersonController {
         return new ResponseEntity<>("Person already exist in the DataBase", HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = InputMismatchException.class)
+    public ResponseEntity<Object> handleMismatchInput(){
+        return new ResponseEntity<>("Url path-variable Type doesnt not match body Type", HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping
     public List<Person> getPersons() {
         return service.getPersons();
@@ -55,9 +62,7 @@ public class PersonController {
     }
 
     @PutMapping(path = "/{type}")
-    public void putPerson(@PathVariable("type") String type,
-                           @RequestParam(required = false) String name,
-                          @RequestParam(required = false) String year) throws InstanceAlreadyExistsException {
-        service.updatePerson(type, name, year);
+    public void putPerson(@RequestBody Person person, @PathVariable("type") String type) throws InstanceAlreadyExistsException {
+        service.updatePerson(person, type);
     }
 }

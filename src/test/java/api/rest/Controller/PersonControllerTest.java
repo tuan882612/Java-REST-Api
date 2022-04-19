@@ -107,6 +107,43 @@ public class PersonControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-//    Unit test for if input is less than 3 or empty
+    @Test
+    @DisplayName("Return BAD REQUEST if less than three variables are in the JSON body")
+    public void invalidBody() throws Exception {
+        RequestBuilder tryPost2 = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Tuan\",\"type\":1111}")
+                .contentType(MediaType.APPLICATION_JSON);
 
+        this.mockMvc.perform(tryPost2)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    @DisplayName("Return BAD REQUEST if any variable is NULL in Json body")
+    public void invalidBody1() throws Exception {
+
+        RequestBuilder tryPost3 = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Tuan\",\"type\":1111,\"year\":}")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        RequestBuilder tryPost4 = MockMvcRequestBuilders
+                .post(baseUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Tuan\",\"type\":,\"year\":1111}")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(tryPost3)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+        this.mockMvc.perform(tryPost4)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 }

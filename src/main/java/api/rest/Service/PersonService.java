@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.InstanceAlreadyExistsException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PersonService {
@@ -40,38 +37,50 @@ public class PersonService {
     }
 
     public void addPerson(Person person) throws InstanceAlreadyExistsException {
-        Optional<Person> personByType = pRepository.findPersonByType(person.getType());
-        Optional<Person> personByName = pRepository.findPersonByName(person.getName());
-        Optional<Person> personByYear = pRepository.findPersonByYear(person.getYear());
 
-        if (personByType.isPresent() || personByName.isPresent()) {
+        if (pRepository.findPersonByType(person.getType()).isPresent() ||
+                pRepository.findPersonByName(person.getName()).isPresent()) {
             throw new InstanceAlreadyExistsException();
         }
 
-//      check whether the input contains all parameters
+        if (person.getType() == null || person.getType().length() == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (person.getName() == null || person.getName().length() == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (person.getYear() == null || person.getYear().length() == 0) {
+            throw new IllegalArgumentException();
+        }
 
         pRepository.save(person);
     }
 
     @Transactional
-    public void updatePerson(String type, String name, String year) throws InstanceAlreadyExistsException {
-        Person person = pRepository.findPersonByType(type)
-                .orElseThrow(InstanceAlreadyExistsException::new);
+    public void updatePerson(Person person, String type) throws NoSuchElementException, InstanceAlreadyExistsException {
 
-        if(name != null &&
-                name.length() > 0 &&
-                !Objects.equals(person.getName(), name)){
+        Person original = pRepository.findPersonByType(person.getType())
+                .orElseThrow(NoSuchElementException::new);
+
+        String name = person.getName();
+        String year = person.getYear();
+
+        if(!Objects.equals(original.getType(), type)){
+            throw new InputMismatchException();
+        }
+
+        if(name != null && name.length() > 0){
             Optional<Person> personName = pRepository.findPersonByName(name);
             if (personName.isPresent()){
                 throw new InstanceAlreadyExistsException();
             }
-            person.setName(name);
+            original.setName(name);
         }
 
-        if(year != null &&
-                year.length() > 0 &&
-                !Objects.equals(person.getYear(), year)){
-            person.setYear(year);
+        if(year != null && year.length() > 0){
+            original.setYear(year);
         }
     }
 }
