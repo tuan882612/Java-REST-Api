@@ -14,4 +14,6 @@ public interface PRepository
     Optional<Person> findPersonByType(String type);
     Optional<Person> findPersonByName(String name);
     Optional<Person> findPersonByYear(String year);
+
+    boolean existsByType(String type);
 }

@@ -65,4 +65,11 @@ public class PersonController {
     public void putPerson(@RequestBody Person person, @PathVariable("type") String type) throws InstanceAlreadyExistsException {
         service.updatePerson(person, type);
     }
+
+//    @PutMapping
+
+    @DeleteMapping(path = "/{type}")
+    public void deletePerson(@RequestBody Person person, @PathVariable("type") String type){
+        service.removePerson(person, type);
+    }
 }

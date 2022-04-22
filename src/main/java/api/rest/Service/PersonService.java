@@ -83,4 +83,12 @@ public class PersonService {
             original.setYear(year);
         }
     }
+
+    public void removePerson(String type) {
+//        boolean val = pRepository.existsByType(type);
+//        if(!val){
+//            throw new NoSuchElementException();
+//        }
+//        pRepository.delete(pRepository.findPersonByType(type));
+    }
 }
