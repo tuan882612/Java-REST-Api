@@ -66,10 +66,10 @@ public class PersonController {
         service.updatePerson(person, type);
     }
 
-//    @PutMapping
+//    @PatchMapping
 
-    @DeleteMapping(path = "/{type}")
-    public void deletePerson(@RequestBody Person person, @PathVariable("type") String type){
-        service.removePerson(person, type);
-    }
+    // @DeleteMapping(path = "/{type}")
+    // public void deletePerson(@RequestBody Person person, @PathVariable("type") String type){
+    //     service.removePerson(person, type);
+    // }
 }
